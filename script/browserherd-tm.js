@@ -70,9 +70,12 @@ async function performGetRequest(url) {
 }
 
 function sendManualSync() {
-  const payload = generateRequestPayload();
-  const base_url = localStorage.getItem("base_url");
-  performUpdateRequest(base_url, payload);
+  const leader = getToggleStatus("mode");
+  if (leader) {
+    const payload = generateRequestPayload();
+    const base_url = localStorage.getItem("base_url");
+    performUpdateRequest(base_url, payload);
+  }
 }
 
 async function pingAPI(base_url) {
@@ -134,6 +137,7 @@ function generateContainerDiv() {
   container.style.borderRadius = "3px";
   container.style.padding = "2px";
   container.style.zIndex = "99999";
+  container.style.boxShadow = "2px 2px 5px black";
 
   document.body.appendChild(container);
   setContainerLocation(container);
@@ -229,9 +233,10 @@ function drawButton(buttonSpecs) {
     labelElement.style.outline = "1px solid black";
     labelElement.style.marginLeft = marginHorizontal;
     labelElement.style.marginRight = marginHorizontal;
-    labelElement.style.fontSize = "13px";
+    labelElement.style.fontSize = "15px";
     labelElement.style.cursor = "pointer";
-    labelElement.style.padding = "2px";
+    labelElement.style.padding = "5px";
+    labelElement.style.borderRadius = "3px";
 
     buttonElement.style.display = "none";
     buttonElement.setAttribute("type", "checkbox");
