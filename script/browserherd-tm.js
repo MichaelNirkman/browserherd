@@ -22,10 +22,10 @@
   let base_url = "http://127.0.0.1:" + server_port;
   localStorage.setItem("base_url", base_url);
   try {
-      await pingAPI(base_url)
-  } catch {
+      await pingAPI(base_url);
+  } catch (e) {
       drawServerError(base_url);
-      return
+      return;
   }
   drawOverlay();
 
@@ -53,8 +53,8 @@ async function performActionLoop(base_url) {
 }
 
 function generateRequestPayload() {
-  const payload = { "location": window.location.href, "scroll": window.scrollY }
-  return payload
+  const payload = { "location": window.location.href, "scroll": window.scrollY };
+  return payload;
 }
 
 async function performUpdateRequest(base_url, payload) {
@@ -84,7 +84,7 @@ async function pingAPI(base_url) {
 }
 
 async function getLocation(base_url) {
-  const url = base_url + "/get_location"
+  const url = base_url + "/get_location";
   let resdata = await performGetRequest(url);
 
   // Set new window location & position if changed since last time
@@ -173,7 +173,7 @@ function makeTextUnselectable(elem) {
 
 function drawDragIcon(container) {
   let icon = document.createElement("span");
-  icon.setAttribute("id", "drag")
+  icon.setAttribute("id", "drag");
   icon.innerHTML = "✥";
 
   icon.style.width = "15px";
@@ -182,7 +182,7 @@ function drawDragIcon(container) {
   icon.style.display = "table-cell";
   icon.style.verticalAlign = "middle";
 
-  container.appendChild(icon)
+  container.appendChild(icon);
 }
 
 // The little separator symbol in between buttons
@@ -209,7 +209,7 @@ function drawName(containerdiv) {
 
 // Copy checkbox state to localStorage and then redraw button style
 function onToggle(buttonId, lsName) {
-  let checked = document.getElementById(buttonId).checked
+  let checked = document.getElementById(buttonId).checked;
   localStorage.setItem(lsName, checked);
   drawButton(getButtonSettings(buttonId));
 }
@@ -227,13 +227,13 @@ function generateButton(container, settings){
   buttonElement.setAttribute("id", settings.buttonId);
   container.appendChild(buttonElement);
 
-  drawButton(settings)
+  drawButton(settings);
 }
 
 function drawButton(buttonSpecs) {
 
   const buttonElement = document.getElementById(buttonSpecs.buttonId);
-  const type = buttonSpecs.type
+  const type = buttonSpecs.type;
 
   if(type==="toggle"){
       const labelElement = document.getElementById(buttonSpecs.labelId);
@@ -255,7 +255,7 @@ function drawButton(buttonSpecs) {
       buttonElement.setAttribute("type", "checkbox");
 
       const checked = getToggleStatus(buttonSpecs.storageName);
-      buttonElement.addEventListener ("click", function() {onToggle(buttonSpecs.buttonId, buttonSpecs.storageName)}, false);
+      buttonElement.addEventListener ("click", function() {onToggle(buttonSpecs.buttonId, buttonSpecs.storageName);}, false);
       buttonElement.checked = checked;
 
       if(checked) {
@@ -269,8 +269,8 @@ function drawButton(buttonSpecs) {
   } else if(type==="simple") {
 
       const marginHorizontal = "5px";
-      buttonElement.setAttribute("type", "button")
-      buttonElement.addEventListener ("click", function() {buttonSpecs.function()}, false);
+      buttonElement.setAttribute("type", "button");
+      buttonElement.addEventListener ("click", function() {buttonSpecs.function();}, false);
       buttonElement.setAttribute("value", buttonSpecs.labelTitle);
 
       buttonElement.style.outline = "none";
@@ -295,7 +295,7 @@ function getToggleStatus(lsName) {
 
   if(checked === null){
       checked = false;
-      localStorage.setItem(lsName, checked)
+      localStorage.setItem(lsName, checked);
   }
 
   return checked;
@@ -353,8 +353,8 @@ function getButtonSettings(key) {
                 "type": "simple",
                 "function": sendManualSync
             }
-        }
-  return buttonSettings[key]
+        };
+  return buttonSettings[key];
 }
 
 
@@ -379,7 +379,7 @@ function mouseDown(e){
 
 function divMove(e){
   var div = document.getElementById('container');
-  var drag = document.getElementById('drag')
+  var drag = document.getElementById('drag');
   div.style.top = (e.clientY - drag.offsetHeight / 2) + 'px';
   div.style.left = (e.clientX - drag.offsetWidth / 2) + 'px';
 }
